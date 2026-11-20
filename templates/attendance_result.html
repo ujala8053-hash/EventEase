@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Check in · {{ event.title }}{% endblock %}
+{% block head %}<meta name="csrf-token" content="{{ csrf_token() }}">{% endblock %}
+{% block content %}
+<section class="auth-section"><div class="scanner-container"><div class="scanner-panel result-panel">
+  <span class="result-icon"><i class="bi bi-calendar-check"></i></span><div class="eyebrow">EventEase check-in</div><h1>{{ event.title }}</h1><p>{{ event.event_date.strftime('%A, %B %d, %Y') }} · {{ event.venue }}</p>
+  <div id="scan-message" class="scan-message">You're in the right place. Confirm below to record your attendance.</div>
+  <button id="confirm-attendance" class="btn btn-primary-purple btn-lg w-100" data-token="{{ event.attendance_token }}">Confirm my attendance <i class="bi bi-arrow-right ms-2"></i></button>
+  <a class="btn btn-link btn-link-purple w-100 mt-2" href="{{ url_for('scanner') }}">Back to scanner</a>
+</div></div></section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/scanner.js') }}"></script>{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Manage students{% endblock %}
+{% block content %}
+<section class="dashboard-wrap"><div class="container"><a class="auth-back" href="{{ url_for('dashboard') }}"><i class="bi bi-arrow-left"></i> Super Admin dashboard</a><div class="page-title-row mt-4"><div><div class="eyebrow">Your campus community</div><h1>Manage students</h1><p>View student account details and access status.</p></div></div>
+<div class="management-table-wrap"><table class="table management-table"><thead><tr><th>Student</th><th>Enrollment</th><th>Department</th><th>Course / year</th><th>Status</th><th>Access</th></tr></thead><tbody>
+{% for student in students %}<tr><td><span class="table-event-name">{{ student.full_name }}</span><small>{{ student.email }}</small></td><td>{{ student.enrollment_number }}</td><td>{{ student.department }}</td><td>{{ student.course_year }}</td><td>{% if student.is_active_account %}<span class="status-active">Active</span>{% else %}<span class="status-inactive">Deactivated</span>{% endif %}</td><td><form method="post" action="{{ url_for('toggle_student', user_id=student.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-outline-purple btn-sm">{{ 'Deactivate' if student.is_active_account else 'Activate' }}</button></form></td></tr>{% else %}<tr><td colspan="6"><div class="empty-state table-empty"><h3>No students yet</h3><p>New student accounts will appear here.</p></div></td></tr>{% endfor %}
+</tbody></table></div></div></section>
+{% endblock %}

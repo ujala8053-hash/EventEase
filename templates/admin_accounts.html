@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Admin accounts{% endblock %}
+{% block content %}
+<section class="dashboard-wrap"><div class="container"><a class="auth-back" href="{{ url_for('dashboard') }}"><i class="bi bi-arrow-left"></i> Super Admin dashboard</a><div class="page-title-row mt-4"><div><div class="eyebrow">The people who make events happen</div><h1>Admin accounts</h1><p>Review access requests and manage active organizers.</p></div></div>
+<div class="management-table-wrap"><table class="table management-table"><thead><tr><th>Administrator</th><th>Employee ID</th><th>Department</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+{% for admin in admins %}<tr><td><span class="table-event-name">{{ admin.full_name }}</span><small>{{ admin.email }}</small></td><td>{{ admin.employee_id }}</td><td>{{ admin.department }}</td><td>{% if not admin.is_approved %}<span class="status-pending">Pending review</span>{% elif admin.is_active_account %}<span class="status-active">Active</span>{% else %}<span class="status-inactive">Deactivated</span>{% endif %}</td><td><div class="table-actions">
+{% if not admin.is_approved %}<form method="post" action="{{ url_for('admin_action', user_id=admin.id, action='approve') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-primary-purple btn-sm">Approve</button></form><form method="post" action="{{ url_for('admin_action', user_id=admin.id, action='reject') }}" onsubmit="return confirm('Reject and remove this request?')"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-outline-purple btn-sm">Reject</button></form>
+{% else %}<form method="post" action="{{ url_for('admin_action', user_id=admin.id, action='deactivate' if admin.is_active_account else 'activate') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-outline-purple btn-sm">{{ 'Deactivate' if admin.is_active_account else 'Activate' }}</button></form>{% endif %}</div></td></tr>
+{% else %}<tr><td colspan="5"><div class="empty-state table-empty"><h3>No Admin accounts yet</h3><p>Organizer requests will appear here for review.</p></div></td></tr>{% endfor %}
+</tbody></table></div></div></section>
+{% endblock %}

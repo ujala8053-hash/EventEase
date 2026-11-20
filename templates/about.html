@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}About EventEase{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container narrow-copy"><div class="eyebrow">A better way to show up</div><h1>Campus life deserves<br><span>a little more ease.</span></h1><p>EventEase brings students, organizers and campus communities together around the moments worth remembering.</p><a class="btn btn-primary-purple" href="{{ url_for('events') }}">Find your next event <i class="bi bi-arrow-right ms-2"></i></a></div></section>
+<section class="section-space"><div class="container"><div class="row g-4">
+  <div class="col-md-4"><div class="value-card"><span class="value-icon"><i class="bi bi-compass"></i></span><h3>Find your thing</h3><p>From creative meetups to career-shaping talks, discover what's happening across campus.</p></div></div>
+  <div class="col-md-4"><div class="value-card"><span class="value-icon"><i class="bi bi-people"></i></span><h3>Find your people</h3><p>Sign up in a moment, meet new faces and feel a little more at home on campus.</p></div></div>
+  <div class="col-md-4"><div class="value-card"><span class="value-icon"><i class="bi bi-stars"></i></span><h3>Keep the memory</h3><p>Show up, check in and receive a certificate for the experiences you take part in.</p></div></div>
+</div></div></section>
+{% endblock %}

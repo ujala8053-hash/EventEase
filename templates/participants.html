@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Participants · {{ event.title }}{% endblock %}
+{% block content %}
+<section class="dashboard-wrap"><div class="container"><a class="auth-back" href="{{ url_for('manage_events') }}"><i class="bi bi-arrow-left"></i> Back to events</a>
+  <div class="page-title-row mt-4"><div><div class="eyebrow">Everyone who saved a seat</div><h1>{{ event.title }}</h1><p>{{ event.registration_count }} registered · {{ event.attendances|length }} checked in</p></div><a class="btn btn-outline-purple" href="{{ url_for('export_participants', event_id=event.id) }}"><i class="bi bi-download me-2"></i>Export CSV</a></div>
+  <div class="management-table-wrap"><table class="table management-table"><thead><tr><th>Student</th><th>Enrollment</th><th>Department</th><th>Registered</th><th>Attendance / Certificate</th></tr></thead><tbody>
+  {% for registration in event.registrations|sort(attribute='registered_at', reverse=true) %}{% set certificate = registration.student.certificates|selectattr('event_id', 'equalto', event.id)|first %}{% set attendance = registration.student.attendances|selectattr('event_id', 'equalto', event.id)|first %}
+  <tr><td><span class="table-event-name">{{ registration.student.full_name }}</span><small>{{ registration.student.email }}</small></td><td>{{ registration.student.enrollment_number or '—' }}</td><td>{{ registration.student.department or '—' }}</td><td>{{ registration.registered_at.strftime('%b %d, %Y · %I:%M %p') }}</td><td>{% if attendance %}<span class="status-active">Checked in</span>{% if certificate %}<a class="text-link ms-2" href="{{ url_for('download_certificate', certificate_id=certificate.certificate_id) }}" title="Download certificate"><i class="bi bi-download"></i></a>{% endif %}{% else %}<span class="muted-copy">Not yet</span>{% endif %}</td></tr>
+  {% else %}<tr><td colspan="5"><div class="empty-state table-empty"><h3>No registrations yet</h3><p>Participants will show up here once they register.</p></div></td></tr>{% endfor %}
+  </tbody></table></div>
+  <div class="qr-management"><div><div class="eyebrow">Check-in made simple</div><h3>Attendance QR code</h3><p>Students scan this code from their EventEase account to check in. Certificates are issued automatically after verification.</p><a class="btn btn-outline-purple" href="{{ url_for('event_qr', event_id=event.id, download=1) }}"><i class="bi bi-download me-2"></i>Download QR code</a></div><img src="{{ url_for('event_qr', event_id=event.id) }}" alt="Attendance QR code for {{ event.title }}"></div>
+</div></section>
+{% endblock %}

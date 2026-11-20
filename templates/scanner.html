@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Attendance scanner{% endblock %}
+{% block head %}<meta name="csrf-token" content="{{ csrf_token() }}">{% endblock %}
+{% block content %}
+<section class="auth-section"><div class="scanner-container">
+  <a class="auth-back" href="{{ url_for('dashboard') }}"><i class="bi bi-arrow-left"></i> Student dashboard</a>
+  <div class="auth-heading"><div class="eyebrow">Show up. Check in. Celebrate.</div><h1>Your event check-in</h1><p>Scan the QR code shared by your event organizer to record attendance and earn your certificate.</p></div>
+  <div class="scanner-panel"><div id="qr-reader" class="qr-reader"></div><div id="scan-message" class="scan-message" role="status">Ready when you are. Allow camera access to start scanning.</div>
+    <div class="scanner-buttons"><button id="start-scan" class="btn btn-primary-purple"><i class="bi bi-camera me-2"></i>Open camera</button><button id="stop-scan" class="btn btn-outline-purple" hidden><i class="bi bi-stop-circle me-2"></i>Stop camera</button></div>
+    <div class="scanner-divider"><span>or enter a code</span></div>
+    <form id="manual-scan-form"><label class="form-label" for="manual-token">Paste the QR code link</label><div class="input-group"><input class="form-control" id="manual-token" placeholder="Paste an EventEase attendance link"><button class="btn btn-outline-purple">Check in</button></div></form>
+  </div>
+  <p class="scanner-note"><i class="bi bi-shield-check me-1"></i> Check-in is available only for events you've registered for.</p>
+</div></section>
+{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="{{ url_for('static', filename='js/scanner.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Get started{% endblock %}
+{% block content %}
+<section class="auth-section"><div class="container auth-container"><div class="auth-heading"><div class="eyebrow">Welcome to the community</div><h1>How will you join us?</h1><p>Choose the account that feels like you.</p></div>
+<div class="row g-4 justify-content-center role-grid">
+  <div class="col-md-5"><a class="role-card" href="{{ url_for('register', role='student') }}"><span class="role-icon"><i class="bi bi-backpack"></i></span><h2>I'm a student</h2><p>Find events, save your seat and collect certificates for the things you do.</p><span class="text-link">Create student account <i class="bi bi-arrow-right"></i></span></a><p class="role-login">Already with us? <a href="{{ url_for('login', role='student') }}">Student login</a></p></div>
+  <div class="col-md-5"><a class="role-card" href="{{ url_for('register', role='admin') }}"><span class="role-icon role-icon-peach"><i class="bi bi-easel"></i></span><h2>I'm an organizer</h2><p>Publish campus events, welcome your participants and celebrate their attendance.</p><span class="text-link">Request organizer access <i class="bi bi-arrow-right"></i></span></a><p class="role-login">Already approved? <a href="{{ url_for('login', role='admin') }}">Admin login</a></p></div>
+</div></div></section>
+<div class="role-login mt-0 pb-4">College authority? <a href="{{ url_for('login', role='super_admin') }}">Super Admin sign in</a></div>
+{% endblock %}

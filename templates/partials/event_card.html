@@ -1,0 +1,11 @@
+<article class="event-card">
+  <a class="event-poster" href="{{ url_for('event_detail', event_id=event.id) }}">
+    {% if event.poster_filename %}<img src="{{ url_for('uploaded_file', filename=event.poster_filename) }}" alt="Poster for {{ event.title }}">
+    {% else %}<div class="poster-placeholder poster-tone-{{ event.id % 4 }}"><span class="poster-category">{{ event.category }}</span><i class="bi bi-stars"></i><span>{{ event.title }}</span></div>{% endif %}
+  </a>
+  <div class="event-card-body"><div class="event-card-meta"><span class="category-pill">{{ event.category }}</span><span class="event-status">{{ event.status }}</span></div>
+    <h3><a href="{{ url_for('event_detail', event_id=event.id) }}">{{ event.title }}</a></h3>
+    <p class="event-location"><i class="bi bi-geo-alt"></i> {{ event.venue }}</p>
+    <div class="event-card-footer"><span><i class="bi bi-calendar3"></i> {{ event.event_date.strftime('%b %d, %Y') }}</span><a href="{{ url_for('event_detail', event_id=event.id) }}" aria-label="View {{ event.title }}"><i class="bi bi-arrow-up-right"></i></a></div>
+  </div>
+</article>

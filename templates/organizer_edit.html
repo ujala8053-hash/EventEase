@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Edit organizer{% endblock %}
+{% block content %}
+<section class="dashboard-wrap"><div class="container form-page-container">
+  <a class="auth-back" href="{{ url_for('organizers', event_id=organizer.event_id) }}"><i class="bi bi-arrow-left"></i> Back to organizers</a>
+  <div class="page-title-row form-page-title"><div><div class="eyebrow">{{ organizer.event.title }}</div><h1>Edit organizer</h1><p>Keep this event's contact details up to date.</p></div></div>
+  <form method="post" class="form-panel form-page-panel"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label class="form-label">Full name</label><input class="form-control mb-3" name="name" value="{{ request.form.get('name', organizer.name) }}" required>
+    <label class="form-label">Email</label><input class="form-control mb-3" name="email" type="email" value="{{ request.form.get('email', organizer.email) }}" required>
+    <label class="form-label">Phone <span class="field-hint">optional</span></label><input class="form-control" name="phone" value="{{ request.form.get('phone', organizer.phone or '') }}">
+    <div class="d-flex justify-content-end gap-2 mt-4"><a class="btn btn-outline-purple" href="{{ url_for('organizers', event_id=organizer.event_id) }}">Cancel</a><button class="btn btn-primary-purple">Save changes</button></div>
+  </form>
+</div></section>
+{% endblock %}

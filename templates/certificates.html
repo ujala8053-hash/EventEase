@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}My certificates{% endblock %}
+{% block content %}
+<section class="dashboard-wrap"><div class="container"><div class="page-title-row"><div><div class="eyebrow">Little wins worth keeping</div><h1>My certificates</h1><p>Every certificate here was earned by showing up.</p></div></div>
+<div class="row g-4">{% for certificate in certificates %}<div class="col-md-6 col-lg-4"><article class="certificate-card"><div class="certificate-preview"><i class="bi bi-stars"></i><span>EVENTEASE COLLEGE</span><strong>Certificate<br>of participation</strong><small>AWARDED TO</small><b>{{ certificate.student.full_name }}</b><em>{{ certificate.event.title }}</em></div><div class="certificate-card-info"><div><strong>{{ certificate.event.title }}</strong><small>{{ certificate.issued_at.strftime('%B %d, %Y') }} · {{ certificate.certificate_id }}</small></div><a class="btn btn-primary-purple btn-sm" href="{{ url_for('download_certificate', certificate_id=certificate.certificate_id) }}" aria-label="Download certificate"><i class="bi bi-download"></i></a></div></article></div>{% else %}<div class="col-12"><div class="empty-state"><div class="empty-icon"><i class="bi bi-award"></i></div><h3>Your next achievement is out there</h3><p>Attend an event you're registered for, scan its QR code and your certificate will appear here automatically.</p><a class="btn btn-primary-purple" href="{{ url_for('events') }}">Find an event</a></div></div>{% endfor %}</div>
+</div></section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Manage events{% endblock %}
+{% block content %}
+<section class="dashboard-wrap"><div class="container">
+  <div class="page-title-row"><div><div class="eyebrow">The behind-the-scenes magic</div><h1>Manage events</h1><p>Everything you need to bring your campus events to life.</p></div><a class="btn btn-primary-purple" href="{{ url_for('create_event') }}"><i class="bi bi-plus-lg me-2"></i>Create event</a></div>
+  <div class="management-table-wrap"><table class="table management-table"><thead><tr><th>Event</th><th>Date</th><th>Participants</th><th>Status</th><th>Tools</th></tr></thead><tbody>
+  {% for event in events %}<tr>
+    <td><a class="table-event-name" href="{{ url_for('event_detail', event_id=event.id) }}">{{ event.title }}</a><small>{{ event.category }} · {{ event.venue }}</small></td>
+    <td>{{ event.event_date.strftime('%b %d, %Y') }}</td><td>{{ event.registration_count }} / {{ event.capacity }}</td><td><span class="event-status">{{ event.status }}</span></td>
+    <td><div class="table-actions"><a class="icon-action" href="{{ url_for('participants', event_id=event.id) }}" title="Participants"><i class="bi bi-people"></i></a><a class="icon-action" href="{{ url_for('organizers', event_id=event.id) }}" title="Organizers"><i class="bi bi-person-lines-fill"></i></a><a class="icon-action" href="{{ url_for('event_qr', event_id=event.id) }}" title="Attendance QR" target="_blank"><i class="bi bi-qr-code"></i></a><a class="icon-action" href="{{ url_for('certificate_template', event_id=event.id) }}" title="Certificate template"><i class="bi bi-award"></i></a><a class="icon-action" href="{{ url_for('edit_event', event_id=event.id) }}" title="Edit event"><i class="bi bi-pencil"></i></a>
+    <form method="post" action="{{ url_for('delete_event', event_id=event.id) }}" onsubmit="return confirm('Delete this event and its associated registrations?')"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="icon-action icon-action-danger" title="Delete event"><i class="bi bi-trash3"></i></button></form></div></td>
+  </tr>{% else %}<tr><td colspan="5"><div class="empty-state table-empty"><h3>No events to manage yet</h3><p>Create your first event to get started.</p></div></td></tr>{% endfor %}
+  </tbody></table></div>
+  <a class="auth-back mt-4 d-inline-flex" href="{{ url_for('dashboard') }}"><i class="bi bi-arrow-left"></i> Back to dashboard</a>
+</div></section>
+{% endblock %}
