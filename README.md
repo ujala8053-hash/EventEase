@@ -17,7 +17,7 @@ python -m pip install -r requirements.txt
 python app.py
 ```
 
-Open [http://127.0.0.1:5000](http://127.0.0.1:5000). SQLite tables and the initial Super Admin account are created automatically when the app starts. Uploaded posters, the SQLite database and generated certificates are stored in the project directory.
+Open [http://127.0.0.1:5001](http://127.0.0.1:5001). SQLite tables and the initial Super Admin account are created automatically when the app starts. Uploaded posters, the SQLite database and generated certificates are stored in the project directory.
 
 ### Initial Super Admin
 
